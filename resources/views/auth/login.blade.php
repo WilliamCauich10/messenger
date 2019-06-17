@@ -4,64 +4,56 @@
 <b-container>
     <b-row align-h="center">        
         <b-col cols="8">
-            <b-card title="Inicio de sesión">
-                <b-alert show>
-                    Por favor ingresa tus datos x fa:
-                </b-alert>
-                <b-card-text>Header and footers using props.</b-card-text>
-                <b-button href="#" variant="primary">Go somewhere</b-button>
-                <b-form class="form-horizontal" method="POST" action="{{ route('login') }}">
+            <b-card title="Inicio de sesión" class="my-3">                
+                @if ($errors -> any()) 
+                    <b-alert show variant="danger">
+                        <ul class="mb-0">
+                            @foreach ($errors -> all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </b-alert>
+                @else 
+                    <b-alert show>
+                        Por favor ingresa tus datos x fa:
+                    </b-alert>  
+                @endif 
+                <b-form method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
-
                     <b-form-group
-                        id="input-group-1"
-                        label="Correo electronico"
-                        label-for="email"
-                        description="Nunca compartiremos tu correo. Está seguro con nosotros.">
-                        <b-form-input
+                        label="Correo electronico" label-for="email">
+                        <b-form-input type="email"
                             id="email"
-                            type="email"
                             name="email"
-                            required
                             value="{{ old('email') }}"  autofocus
+                            required
                             placeholder="example@programacion.com">
                         </b-form-input>
-                    </b-form-group>                   
-                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                        <label for="password" class="col-md-4 control-label">Password</label>
+                    </b-form-group>     
 
-                        <div class="col-md-6">
-                            <input id="password" type="password" class="form-control" name="password" required>
+                    <b-form-group
+                        label="Contraseña" label-for="password"
+                        >
+                        <b-form-input type="password"
+                            id="password" name="password" 
+                            required
+                            >
+                        </b-form-input>
+                    </b-form-group>  
 
-                            @if ($errors->has('password'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
+                    <b-form-group>
+                        <b-form-checkbox name="remember"
+                        {{ old('remember') ? 'checked="true"' : '' }}>
+                            Recordar sesión
+                        </b-form-checkbox>                    
+                    </b-form-group>
 
-                    <div class="form-group">
-                        <div class="col-md-6 col-md-offset-4">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-8 col-md-offset-4">
-                            <button type="submit" class="btn btn-primary">
-                                Login
-                            </button>
-
-                            <a class="btn btn-link" href="{{ route('password.request') }}">
-                                Forgot Your Password?
-                            </a>
-                        </div>
-                    </div>
+                    <b-button type="submit" variant="primary">
+                        Ingresar
+                    </b-button>
+                    <b-button href="{{ route('password.request') }}" variant="link">
+                        ¿Olvidaste tu contraseña?
+                    </b-button>
                 </b-form>
             </b-card>
         </b-col>
