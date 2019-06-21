@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- kGNcsfYdTijtGf8 -->
 <b-container>
     <b-row align-h="center">        
         <b-col cols="8">
